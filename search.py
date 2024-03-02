@@ -202,8 +202,6 @@ def breadthFirstSearch(problem):
     while not frontier.isEmpty():
         currentState = frontier.pop()
 
-        problem.expand(currentState)
-
         if problem.isGoalState(currentState):
             actions = []
             while currentState != initState:
@@ -214,6 +212,7 @@ def breadthFirstSearch(problem):
             return actions
 
         if currentState not in expanded:
+            problem.expand(currentState)
             expanded.add(currentState)
             actions = problem.getActions(currentState)
 
