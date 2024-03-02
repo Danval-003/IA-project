@@ -200,26 +200,28 @@ def breadthFirstSearch(problem):
     memory[str(initState)] = None
 
     while not frontier.isEmpty():
-        current_state = frontier.pop()
+        currentState = frontier.pop()
 
-        if problem.isGoalState(current_state):
+        problem.expand(currentState)
+
+        if problem.isGoalState(currentState):
             actions = []
-            while current_state != initState:
-                prev_state, action = memory[str(current_state)]
+            while currentState != initState:
+                prevState, action = memory[str(currentState)]
                 actions.append(action)
-                current_state = prev_state
+                currentState = prevState    
             actions.reverse()
             return actions
 
-        if current_state not in expanded:
-            expanded.add(current_state)
-            actions = problem.getActions(current_state)
+        if currentState not in expanded:
+            expanded.add(currentState)
+            actions = problem.getActions(currentState)
 
             for action in actions:
-                next_state = problem.getNextState(current_state, action)
-                if str(next_state) not in memory:
-                    memory[str(next_state)] = (current_state, action)
-                    frontier.push(next_state)
+                nextState = problem.getNextState(currentState, action)
+                if str(nextState) not in memory:
+                    memory[str(nextState)] = (currentState, action)
+                    frontier.push(nextState)
 
     return []
 
